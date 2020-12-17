@@ -9,7 +9,7 @@ class UploadRemoveFile:
 
     def uploadFile(self, file_fold, file_name):
         uploadCommand = 'sshpass -p ' + self.password + ' scp -C ' + self.source_fold + file_fold \
-                        + file_name + ' ' + self.destination_fold + file_fold
+                        + file_name + ' ' + self.admin_ip + ':' + self.destination_fold + file_fold
         print(uploadCommand)
         exit_code = os.system(uploadCommand)
         return exit_code

@@ -8,7 +8,9 @@
 
 ## 三、try catch
 
-##
+## 四、类
+### 上传和删除文件类
+upload和remove分别用在了input, output, speed, log, abnormal_input这几种文件里，用到时需要指定文件目录
 
 
 
