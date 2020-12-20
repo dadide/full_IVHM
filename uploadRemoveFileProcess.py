@@ -49,7 +49,6 @@ class UploadRemoveFile:
         else:
             log_flag = 0
             self.generateLog(uploadCommand, log_flag)
-        print(exit_code, log_flag)
         # return exit_code
 
     def removeFile(self, file_fold, file_name):
@@ -71,7 +70,6 @@ class UploadRemoveFile:
             message = 'Success~~ ' + command
             self.logger.info(message)
         elif log_flag == 1 :
-            print('there')
             message = 'Failed!!! ' + command
             self.logger.warning(message)
         elif log_flag == -1:
