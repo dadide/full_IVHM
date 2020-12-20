@@ -20,10 +20,6 @@ def receiveMatrixFun():
     pass
 
 
-
-def estimateOutputFun():
-    pass
-
 def uploadRmFileFun():
     pass
 
