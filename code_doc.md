@@ -11,6 +11,31 @@
 ## 四、类
 ### 上传和删除文件类
 upload和remove分别用在了input, output, speed, log, abnormal_input这几种文件里，用到时需要指定文件目录
+### 参数类
+目前写在了主函数里面，找找更好的位置
+### 写文件类
+在写入input, output, speed, abnormal_input时，都需要使用到这个类
+
+相同地方：
++ 都有一个numpy的矩阵，调用np.savetxt()就将其写入到的文件中去了
++ 都需要指定文件的路径及名称
++ 考虑一个文件里放入多长时间的数据时，需要考虑文件未满的标志
+
+
+
+
+
+## 五、整体架构
+目前的运行原理是：
+1. 在主函数里调用 receiveMatrixDataFun
+2. 另外开始两个进程，分别运行estimate和upload
+
+注意，如果除了receiveMatrixDataFun外，还将接收speed的数据写成了另外一个进程，要在代码的最后加入close的部分。
+
+
+
+
+
 
 
 

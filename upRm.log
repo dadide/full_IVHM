@@ -1,0 +1,2 @@
+--2020-12-20 10:39:58--INFO--Success~~ sshpass -p 123 scp -C /IVHM/input/result.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
+--2020-12-20 10:39:58--INFO--Success~~ rm /IVHM/input/result.csv
