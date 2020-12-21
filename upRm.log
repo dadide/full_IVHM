@@ -1,0 +1,2 @@
+--2020-12-21 09:02:26--DEBUG--Files in input/ are ['resultF.csv']
+--2020-12-21 09:02:26--WARNING--Failed!!! sshpass -p 123 scp -C ./input/resultF.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
