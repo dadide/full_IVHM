@@ -26,14 +26,22 @@ source_fold = './'
 destination_fold = '/home/wy/matlab_example/scpTest/'
 
 class Param:  
-    def __init__(self, frequency, step_time, input_dim, output_dim):
-        self.frequency = frequency
+    def __init__(self, freque, spdfre, step_time, nIn_a, nOu_a, nIn_b, nOu_b, r, d, theta_path):
+        self.freque    = freque
+        self.spdfre    = spdfre
         self.step_time = step_time
-        self.input_dim = input_dim
-        self.output_dim = output_dim
-         
+        self.nIn_a     = nIn_a
+        self.nOu_a     = nOu_a
+        self.nIn_b     = nIn_b
+        self.nOu_b     = nOu_b
+        self.r         = r
+        self.d         = d
+        self.theta_path= theta_path
+
+
     def displayParam(self):
-        print("frequency : ", self.frequency, ", step_time: ", self.step_time, ", input_dim: ", self.input_dim, ", output_dim: ", self.output_dim)
+        print("frequency : ", self.frequency, ", step_time: ", self.step_time, ", input_dim: ", self.nIn_a, ", output_dim: ", self.nOu_a)
+
 
 def get_time():
 	# Func : to get the current time

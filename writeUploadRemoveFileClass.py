@@ -47,7 +47,7 @@ class WriteFile():
             new_file_name = file_name[:INDEX_OF_FLAG] + str(int(file_name[INDEX_OF_FLAG])+1) + file_name[INDEX_OF_FLAG+1:]
         else:
             new_file_name = file_name[:INDEX_OF_FLAG] + 'F' + file_name[INDEX_OF_FLAG+1:]
-        os.ç(self.fold + file_name, self.fold + new_file_name)
+        os.rename(self.fold + file_name, self.fold + new_file_name)
         
         # logging
         log_flag = 1
@@ -81,7 +81,7 @@ class UploadRemoveFile:
         self.destination_fold = destination_fold
         self.logger = config.setUpLogger("upRm")
 
-    def getFileSize(self, file_fold):
+    def getFoldSize(self, file_fold):
         fold = self.source_fold + file_fold
         return sum( os.path.getsize(fold + f) for f in os.listdir(fold) if os.path.isfile(fold + f) ) /1024 
 
@@ -96,7 +96,7 @@ class UploadRemoveFile:
             self.generateLog(emptyCommand, log_flag)
         else:
             log_flag = -2
-            fullCommand = file_fold + ' folder size is ' + str(self.getFileSize(file_fold)) + 'kb' # + '. Files are ' + str(full_files)
+            fullCommand = file_fold + ' folder size is ' + str(self.getFoldSize(file_fold)) + 'kb' # + '. Files are ' + str(full_files)
             self.generateLog(fullCommand, log_flag)
         return full_files
 
