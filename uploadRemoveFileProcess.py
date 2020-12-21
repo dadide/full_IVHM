@@ -3,6 +3,7 @@ import time
 import config
 
 
+
 class UploadRemoveFile:
     def __init__(self, admin_ip, password, source_fold, destination_fold):
         self.admin_ip = admin_ip
@@ -11,17 +12,22 @@ class UploadRemoveFile:
         self.destination_fold = destination_fold
         self.logger = config.setUpLogger("upRm")
 
+    def getFileSize(self, file_fold):
+        fold = self.source_fold + file_fold
+        return sum( os.path.getsize(fold + f) for f in os.listdir(fold) if os.path.isfile(fold + f) ) /1024 
+
     def findFullFile(self, file_fold):
         INDEX_OF_FLAG = -5
         files = os.listdir(self.source_fold + file_fold)
-        full_files = [i for i in files if i[INDEX_OF_FLAG]=='F']    
+        full_files = [i for i in files if i[INDEX_OF_FLAG]=='F' or i[INDEX_OF_FLAG+1]!='.' and i!='.DS_Store']    
+        
         if full_files == []:
             log_flag = -1
             emptyCommand = file_fold
             self.generateLog(emptyCommand, log_flag)
         else:
             log_flag = -2
-            fullCommand = file_fold + ' are ' + str(full_files)
+            fullCommand = file_fold + ' folder size is ' + str(self.getFileSize(file_fold)) + 'kb' # + '. Files are ' + str(full_files)
             self.generateLog(fullCommand, log_flag)
         return full_files
 
@@ -31,6 +37,7 @@ class UploadRemoveFile:
         # print(uploadCommand)
         exit_code = os.system(uploadCommand)
         # exit_code = 1
+        
         if exit_code != 0:
             log_flag = 1
             self.generateLog(uploadCommand, log_flag)
@@ -72,8 +79,8 @@ class UploadRemoveFile:
             message = 'Please wait, empty in ' + command
             self.logger.warning(message)
         elif log_flag == -2:
-            message = 'Files in ' + command
-            self.logger.debug(message)
+            message = command
+            self.logger.info(message)
 
 
 

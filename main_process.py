@@ -27,6 +27,9 @@ def uploadRmFileFun(UpRm):
             UpRm.findUploadRemoveFile('input/')
             time.sleep(1)
             # UpRm.findUploadRemoveFile('result/')
+            # time.sleep(1)
+            UpRm.findUploadRemoveFile('log/')
+            time.sleep(1)            
         except(KeyboardInterrupt):
             break
 
@@ -40,15 +43,15 @@ if __name__ == "__main__":
     process1 = Process(target=estimateOutputFun, kwargs={})
     process2 = Process(target=uploadRmFileFun, kwargs={'UpRm':UpRm})
     
-    process1.start()
+    # process1.start()
     process2.start()
 
     try:
-        process1.join()
+        # process1.join()
         process2.join()
     except(KeyboardInterrupt):
-        process1.terminate()
-        process1.join()
+        # process1.terminate()
+        # process1.join()
         process2.terminate()
         process2.join()
 

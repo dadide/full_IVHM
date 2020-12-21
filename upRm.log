@@ -1,7 +1,0 @@
-<<<<<<< HEAD
---2020-12-21 09:02:26--DEBUG--Files in input/ are ['resultF.csv']
---2020-12-21 09:02:26--WARNING--Failed!!! sshpass -p 123 scp -C ./input/resultF.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
-=======
---2020-12-20 10:39:58--INFO--Success~~ sshpass -p 123 scp -C /IVHM/input/result.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
---2020-12-20 10:39:58--INFO--Success~~ rm /IVHM/input/result.csv
->>>>>>> 9c18bf4393d6a4b5a0a26f9074dca16fc99d0a2f
