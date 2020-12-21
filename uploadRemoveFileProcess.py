@@ -1,19 +1,7 @@
 import os
 import time
-import logging
-from logging.handlers import TimedRotatingFileHandler
+import config
 
-def setUpLogger(log_name):
-    logger = logging.getLogger(log_name)
-    logger.setLevel(logging.DEBUG)        
-    handler = TimedRotatingFileHandler(log_name + ".log", 
-                                    when="m",
-                                    interval=2)    #backupCount=2   
-    formatter = logging.Formatter("--%(asctime)s--%(levelname)s--%(message)s", \
-                                datefmt="%Y-%m-%d %H:%M:%S")                                     
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    return logger
 
 class UploadRemoveFile:
     def __init__(self, admin_ip, password, source_fold, destination_fold):
@@ -21,12 +9,12 @@ class UploadRemoveFile:
         self.password = password
         self.source_fold = source_fold
         self.destination_fold = destination_fold
-        self.logger = setUpLogger("upRm")
+        self.logger = config.setUpLogger("upRm")
 
     def findFullFile(self, file_fold):
         INDEX_OF_FLAG = -5
         files = os.listdir(self.source_fold + file_fold)
-        full_files = [i for i in files if i[INDEX_OF_FLAG]=='F']    
+        full_files = [i for i in files if i[INDEX_OF_FLAG]=='0']    
         if full_files == []:
             log_flag = -1
             emptyCommand = file_fold
@@ -82,27 +70,26 @@ class UploadRemoveFile:
 
 
 
-  
-if __name__ == "__main__":
-    admin_ip = 'wy@202.121.180.27'
-    password = '123'
-    source_fold = '/IVHM/'
-    destination_fold = '/home/wy/matlab_example/scpTest/'
-    inputUpRm = UploadRemoveFile(admin_ip, password, source_fold, destination_fold)
+# if __name__ == "__main__":
+#     admin_ip = 'wy@202.121.180.27'
+#     password = '123'
+#     source_fold = '/IVHM/'
+#     destination_fold = '/home/wy/matlab_example/scpTest/'
+#     inputUpRm = UploadRemoveFile(admin_ip, password, source_fold, destination_fold)
 
-    file_fold = 'input/' # or 'result/', 'speed/'
+#     file_fold = 'input/' # or 'result/', 'speed/'
 
-    flag = 1 
-    if flag == 1:
-        file_name = 'result.csv'
-        ec1 = inputUpRm.uploadFile(file_fold, file_name)
-        ec2 = inputUpRm.removeFile(file_fold, file_name)
-    else:
-        full_file_list = inputUpRm.findFullFile(file_fold)
-        print(full_file_list)
-        for i in range(0, len(full_file_list)):
-            file_name = full_file_list[i]
-            inputUpRm.uploadFile(file_fold, file_name)
-            inputUpRm.removeFile(file_fold, file_name)
+#     flag = 1 
+#     if flag == 1:
+#         file_name = 'result.csv'
+#         ec1 = inputUpRm.uploadFile(file_fold, file_name)
+#         ec2 = inputUpRm.removeFile(file_fold, file_name)
+#     else:
+#         full_file_list = inputUpRm.findFullFile(file_fold)
+#         print(full_file_list)
+#         for i in range(0, len(full_file_list)):
+#             file_name = full_file_list[i]
+#             inputUpRm.uploadFile(file_fold, file_name)
+#             inputUpRm.removeFile(file_fold, file_name)
 
 
