@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import os
+=======
+>>>>>>> 9c18bf4393d6a4b5a0a26f9074dca16fc99d0a2f
 import time
 import logging
 from logging.handlers import TimedRotatingFileHandler
@@ -19,6 +22,7 @@ Dis_Dmp_FR,Dis_Dmp_FL,Dis_Dmp_RL,Dis_Dmp_RR,\
 Acc_X_FM,Acc_Y_FM,Acc_Z_FM,\
 Acc_X_RM,Acc_Y_RM,Acc_Z_RM'
 
+<<<<<<< HEAD
 admin_ip = 'wy@202.121.180.27'
 password = '123'
 # source_fold = '/IVHM/'
@@ -26,6 +30,10 @@ source_fold = './'
 destination_fold = '/home/wy/matlab_example/scpTest/'
 
 class Param:  
+=======
+
+class Param: 
+>>>>>>> 9c18bf4393d6a4b5a0a26f9074dca16fc99d0a2f
     def __init__(self, frequency, step_time, input_dim, output_dim):
         self.frequency = frequency
         self.step_time = step_time
@@ -43,6 +51,7 @@ def get_time():
 	return cur_time
 
 def setUpLogger(log_name):
+<<<<<<< HEAD
     log_fold = './log/'
     is_exist = os.path.exists(log_fold)
     if not is_exist:
@@ -53,9 +62,20 @@ def setUpLogger(log_name):
     handler = TimedRotatingFileHandler(log_fold + log_name + ".log", 
                                     when="s",
                                     interval=5)    #backupCount=2   
+=======
+    logger = logging.getLogger(log_name)
+    logger.setLevel(logging.DEBUG)        
+    handler = TimedRotatingFileHandler(log_name + ".log", 
+                                    when="m",
+                                    interval=2)    #backupCount=2   
+>>>>>>> 9c18bf4393d6a4b5a0a26f9074dca16fc99d0a2f
     formatter = logging.Formatter("--%(asctime)s--%(levelname)s--%(message)s", \
                                 datefmt="%Y-%m-%d %H:%M:%S")                                     
     handler.setFormatter(formatter)
     logger.addHandler(handler)
+<<<<<<< HEAD
     return logger
 
+=======
+    return logger
+>>>>>>> 9c18bf4393d6a4b5a0a26f9074dca16fc99d0a2f

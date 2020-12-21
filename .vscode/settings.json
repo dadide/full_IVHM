@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "/usr/bin/python"
+=======
+    "python.pythonPath": "D:\\SOFTWARE\\python\\envs\\tensorflow\\python.exe"
+>>>>>>> 9c18bf4393d6a4b5a0a26f9074dca16fc99d0a2f
 }
