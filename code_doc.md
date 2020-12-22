@@ -35,6 +35,7 @@ upload和remove分别用在了input, output, speed, log, abnormal_input这几种
 ## 六、功能补充
 1. 如何把check文件夹的大小，且写入日志的功能加上？++ 加入了！
 2. 如何把时间戳给自动生成好？
+3. 如何解决无法ctrl+C的问题？
 
 
 

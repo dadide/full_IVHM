@@ -3,7 +3,7 @@ import time
 import logging
 from logging.handlers import TimedRotatingFileHandler
 
-header_str='For_SSL_FL,For_SSL_FR,For_STR_FL,For_STR_FR,For_BJ_X_FL,For_BJ_Y_FL,For_BJ_X_FR,\
+header_result_str='For_SSL_FL,For_SSL_FR,For_STR_FL,For_STR_FR,For_BJ_X_FL,For_BJ_Y_FL,For_BJ_X_FR,\
 For_BJ_Y_FR,Ms_LCA_FL1,Ms_LCA_FL2,Ms_LCA_FL3,Ms_LCA_FR1,Ms_LCA_FR2,Ms_LCA_FR3,Ms_FSSL,\
 Ms_RSSL,Ms_TA_RL1,Ms_TA_RL2,Ms_TA_RL3,Ms_TA_RR1,Ms_TA_RR2,Ms_TA_RR3,Ms_UCA_RL,Ms_UCA_RR,\
 Ms_LCA_RL1,Ms_LCA_RL2,Ms_LCA_RR1,Ms_LCA_RR2,For_TL_RL,For_TL_RR,For_SSL_RL,For_SSL_RR,\
@@ -19,8 +19,10 @@ Dis_Dmp_FR,Dis_Dmp_FL,Dis_Dmp_RL,Dis_Dmp_RR,\
 Acc_X_FM,Acc_Y_FM,Acc_Z_FM,\
 Acc_X_RM,Acc_Y_RM,Acc_Z_RM'
 
+header_speed_str = 'speed'
+
 admin_ip = 'wy@202.121.180.27'
-password = '123'
+password = '^ac6Pox0ROMt'
 # source_fold = '/IVHM/'
 source_fold = './'
 destination_fold = '/home/wy/matlab_example/scpTest/'

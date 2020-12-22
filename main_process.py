@@ -7,7 +7,6 @@ import config
 import numpy as np
 from multiprocessing import Process, Queue
 
-
 def receiveMatrixFun(p, queue_matrix):
     # generate data we need to test
 
@@ -15,20 +14,23 @@ def receiveMatrixFun(p, queue_matrix):
 
     while True:
         try:
-            mat = np.arange(p.freque*p.step_time*p.nIn_a,dtype=np.float64).reshape(p.freque*p.step_time, p.nIn_a)
+            mat = np.arange(p.freque*p.step_time*p.nIn_a, dtype=np.float64).reshape(p.freque*p.step_time, p.nIn_a)  #,dtype=np.float64
             mat_str = mat.tostring()
             queue_matrix.put(mat_str)
+            # queue_matrix.put(mat)
 
             message = 'count is ' + str(count) + ', queue_matrix size : ' + str(queue_matrix.qsize())
             print(message)
 
+            # print(count)
             count = count + 1
-            if count > 5:
+            if count > 10:
                 break
-
+            
             time.sleep(p.step_time/5)
         except(KeyboardInterrupt):
             break
+
 
 def receiveSpeedFun(p, queue_speed):
     # generate data we need to test
@@ -37,15 +39,16 @@ def receiveSpeedFun(p, queue_speed):
 
     while True:
         try:
-            mat = np.arange(p.freque*p.step_time,dtype=np.float64).reshape(p.freque*p.step_time, 1)
+            mat = np.arange(p.spdfre*p.step_time, dtype=np.float64).reshape(p.spdfre*p.step_time, 1)  #,dtype=np.float64
             mat_str = mat.tostring()
             queue_speed.put(mat_str)
 
             message = 'count is ' + str(count) + ', queue_speed size : ' + str(queue_speed.qsize())
             print(message)
-            print(count)
+
+            # print(count)
             count = count + 1
-            if count > 5:
+            if count > 10:
                 break
             
             time.sleep(p.step_time/5)
@@ -62,7 +65,7 @@ def estimateOutputFun(p, queue_matrix, queue_speed):
     [theta_a3d, theta_b3d] = estimateOutputProcess.loadTheta(p)
     last_r_d = np.zeros([p.r + p.d, p.nIn_a])
     
-    logger = config.setUpLogger("estimate")
+    #logger = config.setUpLogger("estimate")
 
     while True:
         try:
@@ -86,12 +89,13 @@ def estimateOutputFun(p, queue_matrix, queue_speed):
                     SpeedWriter.save2File(batch_speed) 
                     t3 = time.time()
                     message = 'estimate consumes:{:0.2f}, write consumes:{:0.2f}'.format(t2-t1, t3-t2)
-                    logger.INFO(message)
+                    #logger.INFO(message)
                     print(message)
                 else:
                     InputWriter.save2File(batch_input)
                     SpeedWriter.save2File(batch_speed) 
                     message = 'This step does not need calculate'
+                    #logger.INFO(message)
                     print(message)                
         except(KeyboardInterrupt):
             break
@@ -103,8 +107,8 @@ def uploadRmFileFun():
         try:
             UpRm.findUploadRemoveFile('input/')
             time.sleep(1)
-            # UpRm.findUploadRemoveFile('result/')
-            # time.sleep(1)
+            UpRm.findUploadRemoveFile('result/')
+            time.sleep(1)
             UpRm.findUploadRemoveFile('log/')
             time.sleep(1)            
         except(KeyboardInterrupt):
@@ -112,7 +116,7 @@ def uploadRmFileFun():
 
 if __name__ == "__main__":
 
-    p = config.Param(512, 10, 10, 22, 7, 16, 6, 50, 0, 'Mtheta/')
+    p = config.Param(512, 10, 10, 22, 70, 16, 6, 50, 0, 'Mtheta/')
     # freque, spdfre, step_time, nIn_a, nOu_a, nIn_b, nOu_b, r, d, theta_path
 
     queue_matrix = Queue()
@@ -120,28 +124,29 @@ if __name__ == "__main__":
 
     process1 = Process(target=receiveMatrixFun, kwargs={"p":p, "queue_matrix":queue_matrix})
     process2 = Process(target=receiveSpeedFun, kwargs={"p":p, "queue_speed":queue_speed})
-    # process3 = Process(target=estimateOutputFun, kwargs={"p":p, "queue_matrix":queue_matrix, "queue_speed":queue_speed})
-    # process4 = Process(target=uploadRmFileFun, kwargs={})
+    process3 = Process(target=estimateOutputFun, kwargs={"p":p, "queue_matrix":queue_matrix, "queue_speed":queue_speed})
+    process4 = Process(target=uploadRmFileFun, kwargs={})
 
     process1.start()
     process2.start()   
-    # process3.start()
-    # process4.start()
+    process3.start()
+    process4.start()
 
     try:
+        pass
         process1.join()
         process2.join()
-        # process3.join()
-        # process4.join()
+        process3.join()
+        process4.join()
     except(KeyboardInterrupt):
         process1.terminate()
         process1.join()
         process2.terminate()
         process2.join()
-        # process3.terminate()
-        # process3.join()
-        # process4.terminate()
-        # process4.join()
+        process3.terminate()
+        process3.join()
+        process4.terminate()
+        process4.join()
 
         # receiveMatrixFun.p0End()
         # receiveSpeedFun.p0End()

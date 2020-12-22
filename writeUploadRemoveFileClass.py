@@ -1,13 +1,15 @@
 import os
 import time
 import config
+import numpy as np
+
 
 class WriteFile():
     def __init__(self, fold, step_num):
         self.fold = fold
         self.step_num = step_num
         self.file_count = 1
-        self.logger = config.setUpLogger("write")
+        # self.logger = config.setUpLogger("write")
    
     def getFileName(self):
         INDEX_OF_FLAG = -5
@@ -19,13 +21,20 @@ class WriteFile():
         if len(not_full_file) == 0:
             file_name = cur_time + '-' + str(self.file_count) + '-1.csv'
             with open(self.fold + file_name, 'a+') as f:
-                f.write(config.header_input_str+'\n')
+                if self.fold == './input/':
+                    f.write(config.header_input_str+'\n')
+                elif self.fold == './result/':
+                    f.write(config.header_result_str+'\n')
+                elif self.fold == './speed/':
+                    f.write(config.header_speed_str+'\n')
+                else:
+                    f.write("Maybe wrong folder!\n")
         elif len(not_full_file) == 1:           
             file_name = not_full_file[0]
         else:
             log_flag = 0
             command = str(not_full_file)
-            self.generateLog(command, log_flag)
+            # self.generateLog(command, log_flag)
             file_name = 'somethingwrong.csv'
 
         return file_name
@@ -52,7 +61,7 @@ class WriteFile():
         # logging
         log_flag = 1
         command = file_name + ' to new filename: ' + new_file_name
-        self.generateLog(command, log_flag)
+        # self.generateLog(command, log_flag)
 
     def generateLog(self, command, log_flag):
         if log_flag == 0:

@@ -1,8 +1,0 @@
---2020-12-21 22:08:43--INFO--input/ folder size is 14kb
---2020-12-21 22:08:43--WARNING--Failed!!! sshpass -p 123 scp -C ./input/2020_12_21-09_58_27-6-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
---2020-12-21 22:08:44--WARNING--Please wait, empty in log/
---2020-12-21 22:08:45--INFO--input/ folder size is 14kb
---2020-12-21 22:08:45--WARNING--Failed!!! sshpass -p 123 scp -C ./input/2020_12_21-09_58_27-6-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
---2020-12-21 22:08:46--WARNING--Please wait, empty in log/
---2020-12-21 22:08:47--INFO--input/ folder size is 14kb
---2020-12-21 22:08:47--WARNING--Failed!!! sshpass -p 123 scp -C ./input/2020_12_21-09_58_27-6-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/

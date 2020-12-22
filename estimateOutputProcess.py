@@ -38,8 +38,9 @@ def constructData(p, batch_input):
 	batch_input_b = batch_input_b - batch_input_b.mean(axis=0)
 	y_batch_true_b = y_batch_true_b - y_batch_true_b.mean(axis=0)
 
-	message = ' Dimension check----'+str(batch_input_a.shape) + ' '+str(batch_input_b.shape)+ ' '+str(y_batch_true_b.shape)
-	print(message)
+	# message = 'Dimension check----'+str(batch_input_a.shape) + ' '+str(batch_input_b.shape)+ ' '+str(y_batch_true_b.shape)
+	# print(message)
+	
 	# print(batch_input_a.shape)
 	# print(batch_input_b.shape)
 	# print(y_batch_true_a.shape)
@@ -118,7 +119,7 @@ def getCalculateFlag(batch_speed):
 
 	calcu_flag = 0
 
-	if batch_speed[0] > 0.1 and batch_speed[end] > 0.1:
+	if batch_speed[0] > 0.1 or batch_speed[-1] > 0.1:
 		calcu_flag = 1
 		
 	return calcu_flag
