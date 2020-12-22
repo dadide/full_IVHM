@@ -22,9 +22,6 @@ upload和remove分别用在了input, output, speed, log, abnormal_input这几种
 + 考虑一个文件里放入多长时间的数据时，需要考虑文件未满的标志
 
 
-
-
-
 ## 五、整体架构
 目前的运行原理是：
 1. 在主函数里调用 receiveMatrixDataFun

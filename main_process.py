@@ -58,9 +58,9 @@ def receiveSpeedFun(p, queue_speed):
 def estimateOutputFun(p, queue_matrix, queue_speed):
 
     step_num = 3
-    ResultWriter = WriteFile('./result/', step_num)
-    InputWriter = WriteFile('./input/', step_num)
-    SpeedWriter = WriteFile('./speed/', step_num)
+    ResultWriter = WriteFile('result/', step_num)
+    InputWriter = WriteFile('input/', step_num)
+    SpeedWriter = WriteFile('speed/', step_num)
 
     [theta_a3d, theta_b3d] = estimateOutputProcess.loadTheta(p)
     last_r_d = np.zeros([p.r + p.d, p.nIn_a])
@@ -116,7 +116,7 @@ def uploadRmFileFun():
 
 if __name__ == "__main__":
 
-    p = config.Param(512, 10, 10, 22, 70, 16, 6, 50, 0, 'Mtheta/')
+    p = config.Param(512, 10, 10, 22, 70, 16, 6, 50, 0, 'MTheta/')
     # freque, spdfre, step_time, nIn_a, nOu_a, nIn_b, nOu_b, r, d, theta_path
 
     queue_matrix = Queue()

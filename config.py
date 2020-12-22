@@ -23,8 +23,8 @@ header_speed_str = 'speed'
 
 admin_ip = 'wy@202.121.180.27'
 password = '^ac6Pox0ROMt'
-# source_fold = '/IVHM/'
-source_fold = './'
+source_fold = '/IVHM/'
+# source_fold = './'
 destination_fold = '/home/wy/matlab_example/scpTest/'
 
 class Param:  
@@ -61,7 +61,7 @@ def setUpLogger(log_name):
     logger = logging.getLogger(log_name)
     logger.setLevel(logging.DEBUG)        
     handler = TimedRotatingFileHandler(log_fold + log_name + ".log", 
-                                    when="s",
+                                    when="m",
                                     interval=5)    #backupCount=2   
     formatter = logging.Formatter("--%(asctime)s--%(levelname)s--%(message)s", \
                                 datefmt="%Y-%m-%d %H:%M:%S")                                     

@@ -14,8 +14,8 @@ def loadTheta(p):
 	theta_a3d_name = "MTheta_" + str(p.nIn_a) + 'I' + str(p.nOu_a) + 'O'	#"MTheta_18I6O.mat"
 	theta_b3d_name = "MTheta_" + str(p.nIn_b) + 'I' + str(p.nOu_b) + 'O'	#"MTheta_12I2O.mat"
 
-	theta_a3d = loadmat(p.theta_path + theta_a3d_name)
-	theta_b3d = loadmat(p.theta_path + theta_b3d_name)
+	theta_a3d = loadmat(config.source_fold + p.theta_path + theta_a3d_name)
+	theta_b3d = loadmat(config.source_fold + p.theta_path + theta_b3d_name)
 
 	theta_a3d = theta_a3d["MTheta"]									  #得到 theta_a，是一个三维array
 	theta_b3d = theta_b3d["MTheta"]   

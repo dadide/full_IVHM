@@ -7,25 +7,26 @@ import numpy as np
 class WriteFile():
     def __init__(self, fold, step_num):
         self.fold = fold
+        self.path = config.source_fold + fold
         self.step_num = step_num
         self.file_count = 1
-        # self.logger = config.setUpLogger("write")
+        self.logger = config.setUpLogger("write")
    
     def getFileName(self):
         INDEX_OF_FLAG = -5
         cur_time = config.get_time()
         
-        files = os.listdir(self.fold)
+        files = os.listdir(self.path)
         not_full_file = [i for i in files if i[INDEX_OF_FLAG]!='F']
         
         if len(not_full_file) == 0:
             file_name = cur_time + '-' + str(self.file_count) + '-1.csv'
-            with open(self.fold + file_name, 'a+') as f:
-                if self.fold == './input/':
+            with open(self.path + file_name, 'a+') as f:
+                if self.fold == 'input/':
                     f.write(config.header_input_str+'\n')
-                elif self.fold == './result/':
+                elif self.fold == 'result/':
                     f.write(config.header_result_str+'\n')
-                elif self.fold == './speed/':
+                elif self.fold == 'speed/':
                     f.write(config.header_speed_str+'\n')
                 else:
                     f.write("Maybe wrong folder!\n")
@@ -34,7 +35,7 @@ class WriteFile():
         else:
             log_flag = 0
             command = str(not_full_file)
-            # self.generateLog(command, log_flag)
+            self.generateLog(command, log_flag)
             file_name = 'somethingwrong.csv'
 
         return file_name
@@ -48,7 +49,7 @@ class WriteFile():
         
         file_name = self.getFileName()
         with open(self.fold + file_name, 'a+') as f:
-            np.savetxt(f, npArray, fmt='%.4f')
+            np.savetxt(f, npArray, fmt='%.2f', delimiter=',')
 
         # change name for current files
         self.file_count = self.file_count + 1
@@ -61,7 +62,7 @@ class WriteFile():
         # logging
         log_flag = 1
         command = file_name + ' to new filename: ' + new_file_name
-        # self.generateLog(command, log_flag)
+        self.generateLog(command, log_flag)
 
     def generateLog(self, command, log_flag):
         if log_flag == 0:
@@ -92,7 +93,9 @@ class UploadRemoveFile:
 
     def getFoldSize(self, file_fold):
         fold = self.source_fold + file_fold
-        return sum( os.path.getsize(fold + f) for f in os.listdir(fold) if os.path.isfile(fold + f) ) /1024 
+        size = sum( os.path.getsize(fold + f) for f in os.listdir(fold) if os.path.isfile(fold + f) ) /1024 /1024
+        size = round(size, 2)
+        return size
 
     def findFullFile(self, file_fold):
         INDEX_OF_FLAG = -5
@@ -105,12 +108,12 @@ class UploadRemoveFile:
             self.generateLog(emptyCommand, log_flag)
         else:
             log_flag = -2
-            fullCommand = file_fold + ' folder size is ' + str(self.getFoldSize(file_fold)) + 'kb' # + '. Files are ' + str(full_files)
+            fullCommand = file_fold + ' folder size is ' + str(self.getFoldSize(file_fold)) + 'Mb' # + '. Files are ' + str(full_files)
             self.generateLog(fullCommand, log_flag)
         return full_files
 
     def uploadFile(self, file_fold, file_name):
-        uploadCommand = 'sshpass -p ' + self.password + ' scp -C ' + self.source_fold + file_fold \
+        uploadCommand = 'sshpass -p ' + self.password + ' scp -P 996 -C ' + self.source_fold + file_fold \
                         + file_name + ' ' + self.admin_ip + ':' + self.destination_fold + file_fold
         # print(uploadCommand)
         exit_code = os.system(uploadCommand)
@@ -162,17 +165,17 @@ class UploadRemoveFile:
 
 
 
-if __name__ == "__main__":
-    admin_ip = 'wy@202.121.180.27'
-    password = '123'
-    # source_fold = '/IVHM/'
-    source_fold = './'
-    destination_fold = '/home/wy/matlab_example/scpTest/'
-    inputUpRm = UploadRemoveFile(admin_ip, password, source_fold, destination_fold)
+# if __name__ == "__main__":
+#     admin_ip = 'wy@202.121.180.27'
+#     password = '123'
+#     # source_fold = '/IVHM/'
+#     source_fold = './'
+#     destination_fold = '/home/wy/matlab_example/scpTest/'
+#     inputUpRm = UploadRemoveFile(admin_ip, password, source_fold, destination_fold)
 
-    file_fold = 'input/' # or 'result/', 'speed/'
+#     file_fold = 'input/' # or 'result/', 'speed/'
 
-    inputUpRm.findUploadRemoveFile(file_fold)
+#     inputUpRm.findUploadRemoveFile(file_fold)
 
     # flag = 1 
     # if flag == 1:
