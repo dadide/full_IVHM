@@ -8,52 +8,18 @@ import numpy as np
 from multiprocessing import Process, Queue
 
 def receiveMatrixFun(p, queue_matrix):
-    # generate data we need to test
 
-    count = 1
+    config.testFun(p, 1, queue_matrix)      # generate data we need to test
 
-    while True:
-        try:
-            mat = np.arange(p.freque*p.step_time*p.nIn_a, dtype=np.float64).reshape(p.freque*p.step_time, p.nIn_a)  #,dtype=np.float64
-            mat_str = mat.tostring()
-            queue_matrix.put(mat_str)
-            # queue_matrix.put(mat)
-
-            message = 'count is ' + str(count) + ', queue_matrix size : ' + str(queue_matrix.qsize())
-            print(message)
-
-            # print(count)
-            count = count + 1
-            if count > 10:
-                break
-            
-            time.sleep(p.step_time/5)
-        except(KeyboardInterrupt):
-            break
 
 
 def receiveSpeedFun(p, queue_speed):
-    # generate data we need to test
 
-    count = 1
+    config.testFun(p, 2, queue_speed)       # generate data we need to test
 
-    while True:
-        try:
-            mat = np.arange(p.spdfre*p.step_time, dtype=np.float64).reshape(p.spdfre*p.step_time, 1)  #,dtype=np.float64
-            mat_str = mat.tostring()
-            queue_speed.put(mat_str)
 
-            message = 'count is ' + str(count) + ', queue_speed size : ' + str(queue_speed.qsize())
-            print(message)
 
-            # print(count)
-            count = count + 1
-            if count > 10:
-                break
-            
-            time.sleep(p.step_time/5)
-        except(KeyboardInterrupt):
-            break
+
 
 def estimateOutputFun(p, queue_matrix, queue_speed):
 
@@ -65,7 +31,7 @@ def estimateOutputFun(p, queue_matrix, queue_speed):
     [theta_a3d, theta_b3d] = estimateOutputProcess.loadTheta(p)
     last_r_d = np.zeros([p.r + p.d, p.nIn_a])
     
-    #logger = config.setUpLogger("estimate")
+    logger = config.setUpLogger("estimate")
 
     while True:
         try:
@@ -89,13 +55,13 @@ def estimateOutputFun(p, queue_matrix, queue_speed):
                     SpeedWriter.save2File(batch_speed) 
                     t3 = time.time()
                     message = 'estimate consumes:{:0.2f}, write consumes:{:0.2f}'.format(t2-t1, t3-t2)
-                    #logger.INFO(message)
+                    logger.info(message)
                     print(message)
                 else:
                     InputWriter.save2File(batch_input)
                     SpeedWriter.save2File(batch_speed) 
                     message = 'This step does not need calculate'
-                    #logger.INFO(message)
+                    logger.info(message)
                     print(message)                
         except(KeyboardInterrupt):
             break

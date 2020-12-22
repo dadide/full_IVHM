@@ -34,7 +34,31 @@ upload和remove分别用在了input, output, speed, log, abnormal_input这几种
 2. 如何把时间戳给自动生成好？
 3. 如何解决无法ctrl+C的问题？
 
+# 七、常见问题
 
+1.  [     git push 不用输入用户名和密码        ](https://www.cnblogs.com/YC-L/p/12353431.html)              
+
+```
+git config  credential.helper store      
+```
+
+2. 用git stash解决git pull时的冲突
+
+   [more](https://blog.csdn.net/cswioodn/article/details/80812745)
+
+3. 如何解决merge conflict的方法
+首先在pull的时候加上rebase，解决conflict，最后push
+
+    git pull --rebase origin remote
+
+if there is conflict, clean it and execute the following command
+
+    git add .
+    git rebase --continue
+
+if all be done
+
+    git push origin remote
 
 
 

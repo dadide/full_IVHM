@@ -62,7 +62,7 @@ class WriteFile():
         # logging
         log_flag = 1
         command = file_name + ' to new filename: ' + new_file_name
-        self.generateLog(command, log_flag)
+        # self.generateLog(command, log_flag)
 
     def generateLog(self, command, log_flag):
         if log_flag == 0:

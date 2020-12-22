@@ -1,0 +1,17 @@
+--2020-12-22 12:45:33--INFO--input/ folder size is 2.91Mb
+--2020-12-22 12:45:34--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/input/2020_12_22-12_35_25-8-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
+--2020-12-22 12:45:34--INFO--Success~~ rm /IVHM/input/2020_12_22-12_35_25-8-F.csv
+--2020-12-22 12:45:35--INFO--result/ folder size is 15.58Mb
+--2020-12-22 12:45:36--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/result/2020_12_22-12_35_25-8-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/result/
+--2020-12-22 12:45:36--INFO--Success~~ rm /IVHM/result/2020_12_22-12_35_25-8-F.csv
+--2020-12-22 12:45:37--INFO--log/ folder size is 0.01Mb
+--2020-12-22 12:45:38--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/log/upRm.log.2020-12-22_12-35 wy@202.121.180.27:/home/wy/matlab_example/scpTest/log/
+--2020-12-22 12:45:38--INFO--Success~~ rm /IVHM/log/upRm.log.2020-12-22_12-35
+--2020-12-22 12:45:39--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/log/estimate.log.2020-12-22_12-35 wy@202.121.180.27:/home/wy/matlab_example/scpTest/log/
+--2020-12-22 12:45:39--INFO--Success~~ rm /IVHM/log/estimate.log.2020-12-22_12-35
+--2020-12-22 12:45:40--INFO--input/ folder size is 2.91Mb
+--2020-12-22 12:45:40--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/input/2020_12_22-12_45_34-1-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
+--2020-12-22 12:45:40--INFO--Success~~ rm /IVHM/input/2020_12_22-12_45_34-1-F.csv
+--2020-12-22 12:45:41--INFO--result/ folder size is 15.58Mb
+--2020-12-22 12:45:43--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/result/2020_12_22-12_45_34-1-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/result/
+--2020-12-22 12:45:43--INFO--Success~~ rm /IVHM/result/2020_12_22-12_45_34-1-F.csv

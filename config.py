@@ -69,3 +69,25 @@ def setUpLogger(log_name):
     logger.addHandler(handler)
     return logger
 
+def testFun(p, flag, que):
+    count = 1
+    while True:
+        try:
+            if flag==1:
+                mat = np.arange(p.freque*p.step_time*p.nIn_a, dtype=np.float64).reshape(p.freque*p.step_time, p.nIn_a)
+            elif flag==2:
+                mat = np.arange(p.spdfre*p.step_time, dtype=np.float64).reshape(p.spdfre*p.step_time, 1)  #,dtype=np.float64
+            
+            mat_str = mat.tostring()
+            que.put(mat_str)
+
+            message = str(flag) + ' count is ' + str(count) + ', queue size : ' + str(que.qsize())
+            print(message)
+
+            count = count + 1
+            if count > 10:
+                break
+            
+            time.sleep(p.step_time/5)
+        except(KeyboardInterrupt):
+            break
