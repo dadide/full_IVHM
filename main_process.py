@@ -7,26 +7,67 @@ import config
 import numpy as np
 from multiprocessing import Process, Queue
 
+
+test_flag = 1
+
 def receiveMatrixFun(p, queue_matrix):
 
-    config.testFun(p, 1, queue_matrix)      # generate data we need to test
+    if test_flag == 1:
+        config.testFun(p, 1, queue_matrix)      # generate data we need to test
+    else:
+        count = 1
+
+        logger = config.setUpLogger("receive")
+        AbnormityWriter = WriteFile('abnormity/', config.step_num*10)   #so every 30s*10=5min will generate a abnormal csv 
+        
+        # get the pointer of a mat
+        mat = np.zeros([p.step_time*p.freque, p.nIn_a], np.float64)
+        tmp = np.asarray(mat)
+        dataptr = tmp.ctypes.data_as(POINTER(c_double))
+
+        while True:
+            receiveMatrixProcess.receive_data(dataptr, p.step_time, p.freque)
+            mat_str = mat.tostring()
+            queue_matrix.put(mat_str)
+
+            abnormity = np.sum( (mat > config.abnorm_threshold), axis=0)
+            AbnormityWriter.save2File(abnormity.reshape(1, p.nIn_a)) 
+
+            message = 'Received no.%d step data' % count
+            print(message)
+            logger.info(message)
+
+            count = count + 1
 
 
 
 def receiveSpeedFun(p, queue_speed):
 
-    config.testFun(p, 2, queue_speed)       # generate data we need to test
+    if test_flag == 1:
+        config.testFun(p, 2, queue_speed)       # generate data we need to test
+    else:
+        count = 1
+        
+        # get the pointer of a vec
+        vec = np.zeros([p.step_time*p.spdfre, 1], np.float64)
+        tmp = np.asarray(vec)
+        dataptr = tmp.ctypes.data_as(POINTER(c_double))
 
+        while True:
+            receiveSpeedProcess.receive_data(dataptr, p.step_time, p.spdfre)
+            vec_str = vec.tostring()
+            queue_speed.put(vec_str)
 
+            count = count + 1
 
 
 
 def estimateOutputFun(p, queue_matrix, queue_speed):
 
-    step_num = 3
-    ResultWriter = WriteFile('result/', step_num)
-    InputWriter = WriteFile('input/', step_num)
-    SpeedWriter = WriteFile('speed/', step_num)
+    
+    ResultWriter = WriteFile('result/', config.step_num)
+    InputWriter = WriteFile('input/', config.step_num)
+    SpeedWriter = WriteFile('speed/', config.step_num)
 
     [theta_a3d, theta_b3d] = estimateOutputProcess.loadTheta(p)
     last_r_d = np.zeros([p.r + p.d, p.nIn_a])
@@ -76,7 +117,9 @@ def uploadRmFileFun():
             UpRm.findUploadRemoveFile('result/')
             time.sleep(1)
             UpRm.findUploadRemoveFile('log/')
-            time.sleep(1)            
+            time.sleep(1)
+            UpRm.findUploadRemoveFile('abnormity/')
+            time.sleep(1)     
         except(KeyboardInterrupt):
             break
 

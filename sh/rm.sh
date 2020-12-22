@@ -6,3 +6,5 @@ cd ../speed
 rm *
 cd ../log
 rm *
+cd ../abnormity
+rm *

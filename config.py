@@ -1,6 +1,8 @@
 import os
 import time
 import logging
+import numpy as np
+from writeUploadRemoveFileClass import WriteFile
 from logging.handlers import TimedRotatingFileHandler
 
 header_result_str='For_SSL_FL,For_SSL_FR,For_STR_FL,For_STR_FR,For_BJ_X_FL,For_BJ_Y_FL,For_BJ_X_FR,\
@@ -21,11 +23,16 @@ Acc_X_RM,Acc_Y_RM,Acc_Z_RM'
 
 header_speed_str = 'speed'
 
+# upload param
 admin_ip = 'wy@202.121.180.27'
 password = '^ac6Pox0ROMt'
 source_fold = '/IVHM/'
 # source_fold = './'
 destination_fold = '/home/wy/matlab_example/scpTest/'
+
+# write param
+step_num = 3
+abnorm_threshold = np.array([100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 300, 300, 300, 300, 50, 50, 50, 50, 50, 50])
 
 class Param:  
     def __init__(self, freque, spdfre, step_time, nIn_a, nOu_a, nIn_b, nOu_b, r, d, theta_path):
@@ -71,10 +78,18 @@ def setUpLogger(log_name):
 
 def testFun(p, flag, que):
     count = 1
+
+    if flag==1:
+        AbnormityWriter = WriteFile('abnormity/', step_num*10)
+
     while True:
         try:
             if flag==1:
                 mat = np.arange(p.freque*p.step_time*p.nIn_a, dtype=np.float64).reshape(p.freque*p.step_time, p.nIn_a)
+
+                abnormity = np.sum( (mat > abnorm_threshold), axis=0)
+                AbnormityWriter.save2File(abnormity.reshape(1, p.nIn_a)) 
+            
             elif flag==2:
                 mat = np.arange(p.spdfre*p.step_time, dtype=np.float64).reshape(p.spdfre*p.step_time, 1)  #,dtype=np.float64
             
