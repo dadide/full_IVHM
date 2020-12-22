@@ -4,10 +4,10 @@ import numba
 import config
 import numpy as np
 from scipy.io import loadmat
-import uploadRemoveFileProcess
+import writeUploadRemoveFileClass
 
 
-def load_theta(p):
+def loadTheta(p):
 	
 	# Func: To get the saved 3d theta matrix
 	
@@ -23,13 +23,13 @@ def load_theta(p):
 	return theta_a3d, theta_b3d
 
 
-def construct_data(p, batch_input):
+def constructData(p, batch_input):
 
 	# Func: To get the Phi , Y from batch_input and corresponding index_slice
 
-    input_index_a = list(range(0, p.nIn_a))
-    input_index_b = list(range(0, p.nIn_b))
-    output_index_b = list(range(p.nIn_b, p.nIn_b + p.nOu_b))
+	input_index_a = list(range(0, p.nIn_a))
+	input_index_b = list(range(0, p.nIn_b))
+	output_index_b = list(range(p.nIn_b, p.nIn_b + p.nOu_b))
 
 	batch_input_a = batch_input[:, input_index_a]
 	batch_input_b = batch_input[:, input_index_b]
@@ -45,13 +45,13 @@ def construct_data(p, batch_input):
 	# print(y_batch_true_a.shape)
 	# print(y_batch_true_b.shape)
 
-	phi_a, phi_b, ks, ke = construct_phi(p.r, p.d, batch_input_a, batch_input_b, p.nIn_a, p.nIn_b)
+	phi_a, phi_b, ks, ke = constructPhi(p.r, p.d, batch_input_a, batch_input_b, p.nIn_a, p.nIn_b)
 
 	return phi_a, phi_b, y_batch_true_b, ks, ke
 
 
 @numba.jit(nopython=True)
-def construct_phi(r, d, batch_input_a, batch_input_b, nIn_a, nIn_b):
+def constructPhi(r, d, batch_input_a, batch_input_b, nIn_a, nIn_b):
 	# Func: To get the Phi according to r,d,batch_input_a,batch_input_b	
 
 	ks = r
@@ -70,7 +70,7 @@ def construct_phi(r, d, batch_input_a, batch_input_b, nIn_a, nIn_b):
 	return phi_a, phi_b, ks, ke
 
 
-def choose_model(phi_b, theta_b3d, y_batch_true_b, ks, ke):
+def chooseModel(phi_b, theta_b3d, y_batch_true_b, ks, ke):
 
 	# Func: To choose model from the possible working conditions
 	
@@ -90,7 +90,7 @@ def choose_model(phi_b, theta_b3d, y_batch_true_b, ks, ke):
 	return mse.argmin(axis = 0)
 
 
-def predict_output(phi_a, theta_a3d, model_index, ks, ke):
+def estimateOutput(phi_a, theta_a3d, model_index, ks, ke):
 	
 	# Func: To estimate these interested outputs and write the numpy array to .txt files
 	# Todo: Check whether np.set_printoptions works or not?
@@ -103,6 +103,24 @@ def predict_output(phi_a, theta_a3d, model_index, ks, ke):
 	return y_batch_pred_a
 
 
+def getDataFromQueue(queue_matrix, queue_speed, p):
+	
+	mat_str = queue_matrix.get()
+	vec_str = queue_speed.get()
 
+	batch_input = np.fromstring(mat_str, dtype=np.float64).reshape(p.step_time * p.freque, p.nIn_a)
+	batch_speed = np.fromstring(vec_str, dtype=np.float64).reshape(p.step_time * p.spdfre, 1)
+
+	return batch_input, batch_speed
+
+
+def getCalculateFlag(batch_speed):
+
+	calcu_flag = 0
+
+	if batch_speed[0] > 0.1 and batch_speed[end] > 0.1:
+		calcu_flag = 1
+		
+	return calcu_flag
 
 

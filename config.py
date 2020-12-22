@@ -40,7 +40,7 @@ class Param:
 
 
     def displayParam(self):
-        print("frequency : ", self.frequency, ", step_time: ", self.step_time, ", input_dim: ", self.nIn_a, ", output_dim: ", self.nOu_a)
+        print("frequency : ", self.freque, ", step_time: ", self.step_time, ", input_dim: ", self.nIn_a, ", output_dim: ", self.nOu_a)
 
 
 def get_time():
