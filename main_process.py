@@ -8,13 +8,16 @@ import numpy as np
 from multiprocessing import Process, Queue
 
 
-test_flag = 1
+matrix_test_flag = 1
+speed_test_flag = 1
 
 def receiveMatrixFun(p, queue_matrix):
 
-    if test_flag == 1:
+    if matrix_test_flag == 1:
+        print('matrix_test_flag == 1')
         config.testFun(p, 1, queue_matrix)      # generate data we need to test
     else:
+        print('matrix_test_flag == 0')
         count = 1
 
         logger = config.setUpLogger("receive")
@@ -25,12 +28,16 @@ def receiveMatrixFun(p, queue_matrix):
         tmp = np.asarray(mat)
         dataptr = tmp.ctypes.data_as(POINTER(c_double))
 
+        abnorm_threshold = np.zeros([1, p.nIn_a]) + 100
+        # abnorm_threshold = np.array([100, 100, 100, 100, 100, 100, 100, 100, 100])
+
+
         while True:
             receiveMatrixProcess.receive_data(dataptr, p.step_time, p.freque)
             mat_str = mat.tostring()
             queue_matrix.put(mat_str)
 
-            abnormity = np.sum( (mat > config.abnorm_threshold), axis=0)
+            abnormity = np.sum( (abs(mat) > abnorm_threshold), axis=0)
             AbnormityWriter.save2File(abnormity.reshape(1, p.nIn_a)) 
 
             message = 'Received no.%d step data' % count
@@ -43,9 +50,11 @@ def receiveMatrixFun(p, queue_matrix):
 
 def receiveSpeedFun(p, queue_speed):
 
-    if test_flag == 1:
+    if speed_test_flag == 1:
+        print('speed_test_flag == 1')
         config.testFun(p, 2, queue_speed)       # generate data we need to test
     else:
+        print('speed_test_flag == 0')
         count = 1
         
         # get the pointer of a vec
@@ -125,7 +134,9 @@ def uploadRmFileFun():
 
 if __name__ == "__main__":
 
-    p = config.Param(512, 10, 10, 22, 70, 16, 6, 50, 0, 'MTheta/')
+    # p = config.Param(512, 10, 10, 22, 70, 16, 6, 50, 0, 'MTheta/')
+    p = config.Param(512, 10, 10, 9, 70, 6, 3, 50, 0, 'MTheta/')
+
     # freque, spdfre, step_time, nIn_a, nOu_a, nIn_b, nOu_b, r, d, theta_path
 
     queue_matrix = Queue()
@@ -134,12 +145,12 @@ if __name__ == "__main__":
     process1 = Process(target=receiveMatrixFun, kwargs={"p":p, "queue_matrix":queue_matrix})
     process2 = Process(target=receiveSpeedFun, kwargs={"p":p, "queue_speed":queue_speed})
     process3 = Process(target=estimateOutputFun, kwargs={"p":p, "queue_matrix":queue_matrix, "queue_speed":queue_speed})
-    process4 = Process(target=uploadRmFileFun, kwargs={})
+    # process4 = Process(target=uploadRmFileFun, kwargs={})
 
     process1.start()
     process2.start()   
     process3.start()
-    process4.start()
+    # process4.start()
 
     try:
         pass
@@ -154,8 +165,8 @@ if __name__ == "__main__":
         process2.join()
         process3.terminate()
         process3.join()
-        process4.terminate()
-        process4.join()
+        # process4.terminate()
+        # process4.join()
 
         # receiveMatrixFun.p0End()
         # receiveSpeedFun.p0End()

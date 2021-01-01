@@ -1,0 +1,27 @@
+--2021-01-01 13:05:23--WARNING--Please wait, empty in input/
+--2021-01-01 13:05:24--WARNING--Please wait, empty in result/
+--2021-01-01 13:05:25--WARNING--Please wait, empty in log/
+--2021-01-01 13:05:26--WARNING--Please wait, empty in abnormity/
+--2021-01-01 13:05:27--WARNING--Please wait, empty in input/
+--2021-01-01 13:05:28--WARNING--Please wait, empty in result/
+--2021-01-01 13:05:29--WARNING--Please wait, empty in log/
+--2021-01-01 13:05:30--WARNING--Please wait, empty in abnormity/
+--2021-01-01 13:06:14--INFO--input/ folder size is 3.87Mb
+--2021-01-01 13:06:15--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/input/2021_01_01-13_05_25-1-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
+--2021-01-01 13:06:15--INFO--Success~~ rm /IVHM/input/2021_01_01-13_05_25-1-F.csv
+--2021-01-01 13:06:16--INFO--result/ folder size is 19.47Mb
+--2021-01-01 13:06:18--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/result/2021_01_01-13_05_25-1-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/result/
+--2021-01-01 13:06:18--INFO--Success~~ rm /IVHM/result/2021_01_01-13_05_25-1-F.csv
+--2021-01-01 13:06:19--WARNING--Please wait, empty in log/
+--2021-01-01 13:06:20--WARNING--Please wait, empty in abnormity/
+--2021-01-01 13:06:21--INFO--input/ folder size is 3.87Mb
+--2021-01-01 13:06:21--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/input/2021_01_01-13_05_29-4-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
+--2021-01-01 13:06:21--INFO--Success~~ rm /IVHM/input/2021_01_01-13_05_29-4-F.csv
+--2021-01-01 13:06:22--INFO--result/ folder size is 19.48Mb
+--2021-01-01 13:06:24--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/result/2021_01_01-13_05_29-4-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/result/
+--2021-01-01 13:06:24--INFO--Success~~ rm /IVHM/result/2021_01_01-13_05_29-4-F.csv
+--2021-01-01 13:06:25--WARNING--Please wait, empty in log/
+--2021-01-01 13:06:26--WARNING--Please wait, empty in abnormity/
+--2021-01-01 13:06:27--INFO--input/ folder size is 3.87Mb
+--2021-01-01 13:06:28--INFO--Success~~ sshpass -p ^ac6Pox0ROMt scp -P 996 -C /IVHM/input/2021_01_01-13_06_20-3-F.csv wy@202.121.180.27:/home/wy/matlab_example/scpTest/input/
+--2021-01-01 13:06:28--INFO--Success~~ rm /IVHM/input/2021_01_01-13_06_20-3-F.csv

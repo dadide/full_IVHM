@@ -27,12 +27,12 @@ header_speed_str = 'speed'
 admin_ip = 'wy@202.121.180.27'
 password = '^ac6Pox0ROMt'
 source_fold = '/IVHM/'
-# source_fold = './'
+onedrive_fold = '../onedrive/'
 destination_fold = '/home/wy/matlab_example/scpTest/'
 
 # write param
 step_num = 3
-abnorm_threshold = np.array([100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 300, 300, 300, 300, 50, 50, 50, 50, 50, 50])
+
 
 class Param:  
     def __init__(self, freque, spdfre, step_time, nIn_a, nOu_a, nIn_b, nOu_b, r, d, theta_path):
@@ -81,6 +81,7 @@ def testFun(p, flag, que):
 
     if flag==1:
         AbnormityWriter = WriteFile('abnormity/', step_num*10)
+        abnorm_threshold = np.zeros([1, p.nIn_a]) + 100
 
     while True:
         try:

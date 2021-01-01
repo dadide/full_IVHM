@@ -6,7 +6,7 @@ import numpy as np
 class WriteFile():
     def __init__(self, fold, step_num):
         self.fold = fold
-        self.path = config.source_fold + fold
+        self.path = config.onedrive_fold + fold
         self.step_num = step_num
         self.file_count = 1
         # self.logger = config.setUpLogger("write")
@@ -42,12 +42,12 @@ class WriteFile():
     def save2File(self, npArray):
         INDEX_OF_FLAG = -5
 
-        is_exist = os.path.exists(self.fold)
+        is_exist = os.path.exists(self.path)
         if not is_exist:
-            os.makedirs(self.fold)
+            os.makedirs(self.path)
         
         file_name = self.getFileName()
-        with open(self.fold + file_name, 'a+') as f:
+        with open(self.path + file_name, 'a+') as f:
             np.savetxt(f, npArray, fmt='%.2f', delimiter=',')
 
         # change name for current files
@@ -56,7 +56,7 @@ class WriteFile():
             new_file_name = file_name[:INDEX_OF_FLAG] + str(int(file_name[INDEX_OF_FLAG])+1) + file_name[INDEX_OF_FLAG+1:]
         else:
             new_file_name = file_name[:INDEX_OF_FLAG] + 'F' + file_name[INDEX_OF_FLAG+1:]
-        os.rename(self.fold + file_name, self.fold + new_file_name)
+        os.rename(self.path + file_name, self.path + new_file_name)
         
         # # logging
         # log_flag = 1
@@ -83,22 +83,22 @@ class WriteFile():
 
 
 class UploadRemoveFile:
-    def __init__(self, admin_ip, password, source_fold, destination_fold):
+    def __init__(self, admin_ip, password, onedrive_fold, destination_fold):
         self.admin_ip = admin_ip
         self.password = password
-        self.source_fold = source_fold
+        self.onedrive_fold = onedrive_fold
         self.destination_fold = destination_fold
         self.logger = config.setUpLogger("upRm")
 
     def getFoldSize(self, file_fold):
-        fold = self.source_fold + file_fold
+        fold = self.onedrive_fold + file_fold
         size = sum( os.path.getsize(fold + f) for f in os.listdir(fold) if os.path.isfile(fold + f) ) /1024 /1024
         size = round(size, 2)
         return size
 
     def findFullFile(self, file_fold):
         INDEX_OF_FLAG = -5
-        files = os.listdir(self.source_fold + file_fold)
+        files = os.listdir(self.onedrive_fold + file_fold)
         full_files = [i for i in files if i[INDEX_OF_FLAG]=='F' or i[INDEX_OF_FLAG+1]!='.' and i!='.DS_Store']    
         
         if full_files == []:
@@ -112,7 +112,7 @@ class UploadRemoveFile:
         return full_files
 
     def uploadFile(self, file_fold, file_name):
-        uploadCommand = 'sshpass -p ' + self.password + ' scp -P 996 -C ' + self.source_fold + file_fold \
+        uploadCommand = 'sshpass -p ' + self.password + ' scp -P 996 -C ' + self.onedrive_fold + file_fold \
                         + file_name + ' ' + self.admin_ip + ':' + self.destination_fold + file_fold
         # print(uploadCommand)
         exit_code = os.system(uploadCommand)
@@ -127,7 +127,7 @@ class UploadRemoveFile:
         return exit_code
 
     def removeFile(self, file_fold, file_name):
-        removeCommand = 'rm ' + self.source_fold + file_fold + file_name 
+        removeCommand = 'rm ' + self.onedrive_fold + file_fold + file_name 
         # print(removeCommand)
         exit_code = os.system(removeCommand)
         # exit_code = 2
@@ -167,10 +167,10 @@ class UploadRemoveFile:
 # if __name__ == "__main__":
 #     admin_ip = 'wy@202.121.180.27'
 #     password = '123'
-#     # source_fold = '/IVHM/'
-#     source_fold = './'
+#     # onedrive_fold = '/IVHM/'
+#     onedrive_fold = './'
 #     destination_fold = '/home/wy/matlab_example/scpTest/'
-#     inputUpRm = UploadRemoveFile(admin_ip, password, source_fold, destination_fold)
+#     inputUpRm = UploadRemoveFile(admin_ip, password, onedrive_fold, destination_fold)
 
 #     file_fold = 'input/' # or 'result/', 'speed/'
 

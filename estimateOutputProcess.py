@@ -11,14 +11,23 @@ def loadTheta(p):
 	
 	# Func: To get the saved 3d theta matrix
 	
-	theta_a3d_name = "MTheta_" + str(p.nIn_a) + 'I' + str(p.nOu_a) + 'O'	#"MTheta_18I6O.mat"
-	theta_b3d_name = "MTheta_" + str(p.nIn_b) + 'I' + str(p.nOu_b) + 'O'	#"MTheta_12I2O.mat"
+	# theta_a3d_name = "MTheta_" + str(p.nIn_a) + 'I' + str(p.nOu_a) + 'O'	#"MTheta_18I6O.mat"
+	# theta_b3d_name = "MTheta_" + str(p.nIn_b) + 'I' + str(p.nOu_b) + 'O'	#"MTheta_12I2O.mat"
+
+	theta_a3d_name = "MTheta_22I70O"
+	theta_b3d_name = "MTheta_16I6O"
 
 	theta_a3d = loadmat(config.source_fold + p.theta_path + theta_a3d_name)
 	theta_b3d = loadmat(config.source_fold + p.theta_path + theta_b3d_name)
 
 	theta_a3d = theta_a3d["MTheta"]									  #得到 theta_a，是一个三维array
 	theta_b3d = theta_b3d["MTheta"]   
+
+	theta_a3d = theta_a3d[:, 0:(p.r+1+p.d)*p.nIn_a, :]
+	theta_b3d = theta_b3d[:, 0:(p.r+1+p.d)*p.nIn_b, 0:p.nOu_b]
+
+	print(theta_a3d.shape)
+	print(theta_b3d.shape)
 
 	return theta_a3d, theta_b3d
 
